@@ -1,7 +1,6 @@
-import React from 'react';
-import { Shield, LogOut } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { Shield, LogOut } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export function Header() {
   const { isAuthenticated, logout, user } = useAuth();
@@ -14,9 +13,19 @@ export function Header() {
           <span className="text-xl font-bold">SecureScanner</span>
         </Link>
         <div className="flex items-center space-x-6">
-          <Link to="/" className="hover:text-blue-400 transition-colors">Home</Link>
-          <Link to="#features" className="hover:text-blue-400 transition-colors">Features</Link> {/* Changed this to Link */}
-          <Link to="/contact" className="hover:text-blue-400 transition-colors">Contact</Link>
+          <Link to="/" className="hover:text-blue-400 transition-colors">
+            Home
+          </Link>
+          <Link
+            to="#features"
+            className="hover:text-blue-400 transition-colors"
+          >
+            Features
+          </Link>{" "}
+          {/* Changed this to Link */}
+          <Link to="/contact" className="hover:text-blue-400 transition-colors">
+            Contact
+          </Link>
           {isAuthenticated ? (
             <div className="flex items-center space-x-4">
               <span className="text-gray-300">Welcome, {user?.name}</span>
