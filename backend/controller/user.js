@@ -1,8 +1,10 @@
+const { model } = require("mongoose");
 const User = require("../model/users");
 
 async function createNewUser(req, res) {
   try {
-    await User.create(req.body);
+    const newUser = await User.create(req.body);
+    newUser.save();
     return res.status(201).json({ message: "User created successfully" });
   } catch (err) {
     console.log("Error in creating user", err);
