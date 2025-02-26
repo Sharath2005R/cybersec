@@ -1,8 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { Shield, Mail, Lock, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function Signup() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -69,6 +71,7 @@ export function Signup() {
         })
         .then((response) => {
           if (response.status === 201) {
+            navigate("/login");
             console.log("Form Submitted Successfully");
           } else {
             console.log("Error In Submitting Form");
