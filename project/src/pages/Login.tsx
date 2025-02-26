@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation, Navigate } from 'react-router-dom';
-import { Mail, Lock, AlertCircle } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { Mail, Lock, AlertCircle } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 export function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || "/";
 
   if (isAuthenticated) {
     return <Navigate to={from} replace />;
@@ -20,10 +21,21 @@ export function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(email, password);
-      navigate(from, { replace: true });
+      const response = await axios.post("http://localhost:3000/user/login", {
+        email,
+        password,
+      });
+      if (response.status === 200) {
+        await login(email, password);
+        navigate(from, { replace: true });
+        console.log("User logged in");
+      } else {
+        setError("Invalid email or password.");
+      }
     } catch (err) {
-      setError('Invalid email or password. Password must be at least 6 characters.');
+      setError(
+        "Invalid email or password. Password must be at least 6 characters."
+      );
     }
   };
 
@@ -31,7 +43,9 @@ export function Login() {
     <main className="flex-1 flex items-center justify-center py-16 px-4">
       <div className="max-w-md w-full space-y-8 bg-gray-800 p-8 rounded-lg">
         <div>
-          <h2 className="text-3xl font-bold text-center">Sign in to your account</h2>
+          <h2 className="text-3xl font-bold text-center">
+            Sign in to your account
+          </h2>
           <p className="mt-2 text-center text-gray-300">
             Access your security scanning dashboard
           </p>
