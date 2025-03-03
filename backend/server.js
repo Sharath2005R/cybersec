@@ -9,10 +9,6 @@ connectDB("mongodb://127.0.0.1:27017/CyberSecurity").then(() => {
   console.log("Database connected");
 });
 
-app.get("/", (req, res) => {
-  res.end("Hello");
-});
-
 app.use(cors());
 app.use(express.json());
 app.use("/user", userRoutes);
